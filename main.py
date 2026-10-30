@@ -74,7 +74,18 @@ class ConditionalMasker:
             masked_record = record.copy()  # Create a copy to avoid modifying the original
             for rule in self.config:
                 try:
-                    if eval(rule['condition'], {}, masked_record): # Evaluate condition using record data
+                    # The namespace carries the fields twice: under their
+                    # own names, so a condition can write age > 60, and
+                    # under "record", because the documented example
+                    # conditions are written as record['department'].
+                    # With only the bare fields present, every documented
+                    # condition died on a NameError and its rule was
+                    # silently skipped. Conditions come from the operator's
+                    # own config file; eval here is a rule language for a
+                    # trusted local file, not a sandbox for foreign input.
+                    namespace = dict(masked_record)
+                    namespace['record'] = masked_record
+                    if eval(rule['condition'], {}, namespace): # Evaluate condition using record data
                         field_to_mask = rule['field']
                         masking_type = rule['masking_type']
 
@@ -140,10 +151,14 @@ class ConditionalMasker:
     def process_data(self):
         """
         Reads data from the input file, masks it, and writes it to the output file.
+
+        Returns True only when the output file was written. Every failure
+        path used to return None and let main exit 0, so a missing config
+        file looked like a successful masking run from the shell.
         """
         if self.config is None:
             logging.error("Configuration loading failed.  Exiting.")
-            return
+            return False
 
         try:
             with open(self.input_file, 'r') as f:
@@ -151,11 +166,11 @@ class ConditionalMasker:
                     data = json.load(f)
                 except json.JSONDecodeError:
                     logging.error(f"Invalid JSON in input file: {self.input_file}")
-                    return
+                    return False
 
             if not isinstance(data, list):
                 logging.error("Input file must contain a list of records (JSON array).")
-                return
+                return False
 
             masked_data = self.mask_data(data)
 
@@ -163,12 +178,14 @@ class ConditionalMasker:
                 json.dump(masked_data, f, indent=4)
 
             logging.info(f"Data masking complete.  Output written to: {self.output_file}")
-
+            return True
 
         except FileNotFoundError:
             logging.error(f"Input file not found: {self.input_file}")
+            return False
         except Exception as e:
             logging.exception(f"Error processing data: {e}")  # Log exception with traceback
+            return False
 
 
 
@@ -205,7 +222,8 @@ def main():
         sys.exit(1)
 
     masker = ConditionalMasker(args.config_file, args.input_file, args.output_file)
-    masker.process_data()
+    if not masker.process_data():
+        sys.exit(1)
 
 
 if __name__ == "__main__":
