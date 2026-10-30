@@ -1,3 +1,5 @@
+![Banner](banner.png)
+
 # dm-data-conditional-masker
 Masks data based on conditions specified in a configuration file. Allows selective masking of data based on rules defined using simple logical expressions (e.g., mask email addresses only for users in a specific department). - Focused on Tools designed to generate or mask sensitive data with realistic-looking but meaningless values
 
