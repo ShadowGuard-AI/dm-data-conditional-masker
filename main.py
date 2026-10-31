@@ -1,11 +1,116 @@
 import argparse
+import ast
 import json
 import logging
 import sys
+from pathlib import Path
 from faker import Faker
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+class ConditionError(ValueError):
+    """Raised when a rule condition uses anything outside the allowed grammar."""
+
+
+def evaluate_condition(condition, record):
+    """
+    Evaluates a rule condition against one record with a narrow AST
+    walker. Allowed: field lookups (a bare field name, or
+    record['field']), comparisons including chained comparisons and
+    in / not in, the boolean operators and / or, unary not, constants,
+    and lists or tuples of constants on the right side of in / not in.
+    Everything else, including calls, imports, attribute access,
+    subscripts on anything but record, arithmetic, and comprehensions,
+    raises ConditionError. An unknown field name also raises
+    ConditionError, so a mistyped field cannot pass silently.
+    """
+    try:
+        tree = ast.parse(condition, mode='eval')
+    except SyntaxError as e:
+        raise ConditionError(f"Condition does not parse: {e}")
+
+    def eval_node(node):
+        if isinstance(node, ast.Expression):
+            return eval_node(node.body)
+        if isinstance(node, ast.BoolOp):
+            if isinstance(node.op, ast.And):
+                for value in node.values:
+                    if not eval_node(value):
+                        return False
+                return True
+            if isinstance(node.op, ast.Or):
+                for value in node.values:
+                    if eval_node(value):
+                        return True
+                return False
+            raise ConditionError("Boolean operator not allowed in condition.")
+        if isinstance(node, ast.UnaryOp):
+            if isinstance(node.op, ast.Not):
+                return not eval_node(node.operand)
+            if isinstance(node.op, (ast.USub, ast.UAdd)) and isinstance(node.operand, ast.Constant) \
+                    and isinstance(node.operand.value, (int, float)):
+                return -node.operand.value if isinstance(node.op, ast.USub) else node.operand.value
+            raise ConditionError("Unary operator not allowed in condition.")
+        if isinstance(node, ast.Compare):
+            left = eval_node(node.left)
+            for op, comparator in zip(node.ops, node.comparators):
+                right = eval_node(comparator)
+                try:
+                    if isinstance(op, ast.Eq):
+                        ok = left == right
+                    elif isinstance(op, ast.NotEq):
+                        ok = left != right
+                    elif isinstance(op, ast.Lt):
+                        ok = left < right
+                    elif isinstance(op, ast.LtE):
+                        ok = left <= right
+                    elif isinstance(op, ast.Gt):
+                        ok = left > right
+                    elif isinstance(op, ast.GtE):
+                        ok = left >= right
+                    elif isinstance(op, ast.In):
+                        ok = left in right
+                    elif isinstance(op, ast.NotIn):
+                        ok = left not in right
+                    else:
+                        raise ConditionError("Comparison operator not allowed in condition.")
+                except TypeError as e:
+                    raise ConditionError(f"Comparison failed: {e}")
+                if not ok:
+                    return False
+                left = right
+            return True
+        if isinstance(node, ast.Name):
+            if node.id == 'record':
+                return record
+            if node.id in record:
+                return record[node.id]
+            raise ConditionError(f"Unknown field name in condition: {node.id}")
+        if isinstance(node, ast.Subscript):
+            if not (isinstance(node.value, ast.Name) and node.value.id == 'record'):
+                raise ConditionError("Only record['field'] lookups are allowed in conditions.")
+            if not (isinstance(node.slice, ast.Constant) and isinstance(node.slice.value, str)):
+                raise ConditionError("record lookups need a constant field name, as in record['field'].")
+            field = node.slice.value
+            if field not in record:
+                raise ConditionError(f"Unknown field name in condition: {field}")
+            return record[field]
+        if isinstance(node, ast.Constant):
+            if isinstance(node.value, (str, int, float, bool)) or node.value is None:
+                return node.value
+            raise ConditionError("Constant not allowed in condition.")
+        if isinstance(node, (ast.List, ast.Tuple)):
+            values = []
+            for element in node.elts:
+                if not isinstance(element, ast.Constant):
+                    raise ConditionError("Lists in conditions may hold constants only.")
+                values.append(eval_node(element))
+            return values
+        raise ConditionError(f"Condition element not allowed: {type(node).__name__}")
+
+    return eval_node(tree)
+
 
 class ConditionalMasker:
     """
@@ -26,6 +131,7 @@ class ConditionalMasker:
         self.output_file = output_file
         self.config = self.load_config()
         self.fake = Faker()
+        self.evaluation_failures = 0
 
     def load_config(self):
         """
@@ -69,23 +175,17 @@ class ConditionalMasker:
             list: The masked data.
         """
 
+        self.evaluation_failures = 0
         masked_data = []
         for record in data:
             masked_record = record.copy()  # Create a copy to avoid modifying the original
             for rule in self.config:
                 try:
-                    # The namespace carries the fields twice: under their
-                    # own names, so a condition can write age > 60, and
-                    # under "record", because the documented example
-                    # conditions are written as record['department'].
-                    # With only the bare fields present, every documented
-                    # condition died on a NameError and its rule was
-                    # silently skipped. Conditions come from the operator's
-                    # own config file; eval here is a rule language for a
-                    # trusted local file, not a sandbox for foreign input.
-                    namespace = dict(masked_record)
-                    namespace['record'] = masked_record
-                    if eval(rule['condition'], {}, namespace): # Evaluate condition using record data
+                    # Conditions are read by the narrow evaluator in
+                    # evaluate_condition, never by eval. A field can be
+                    # named bare, as in age > 60, or through record, as
+                    # in record['department'] == 'HR'.
+                    if evaluate_condition(rule['condition'], masked_record):
                         field_to_mask = rule['field']
                         masking_type = rule['masking_type']
 
@@ -94,11 +194,11 @@ class ConditionalMasker:
                         else:
                             logging.warning(f"Field '{field_to_mask}' not found in record. Skipping masking.")
 
-
-                except NameError as e:
-                    logging.error(f"Error in condition evaluation.  Invalid variable used: {e}")
-                    continue # Skip to the next rule
                 except Exception as e:
+                    # A failed rule is counted, not silently skipped:
+                    # process_data refuses to write output or report
+                    # completion when the count is not zero.
+                    self.evaluation_failures += 1
                     logging.error(f"Error evaluating condition or masking: {e}")
                     continue
 
@@ -174,6 +274,13 @@ class ConditionalMasker:
 
             masked_data = self.mask_data(data)
 
+            if self.evaluation_failures:
+                logging.error(
+                    f"{self.evaluation_failures} rule evaluation(s) failed. "
+                    "No output was written and the run is not complete."
+                )
+                return False
+
             with open(self.output_file, 'w') as f:
                 json.dump(masked_data, f, indent=4)
 
@@ -199,7 +306,7 @@ def setup_argparse():
     parser = argparse.ArgumentParser(description='Masks data based on conditions specified in a configuration file.')
     parser.add_argument('-c', '--config', dest='config_file', required=True, help='Path to the configuration file.')
     parser.add_argument('-i', '--input', dest='input_file', required=True, help='Path to the input data file.')
-    parser.add_argument('-o', '--output', dest='output_file', required=True, help='Path to the output masked data file.')
+    parser.add_argument('-o', '--output', dest='output_file', required=True, help='Path to the output masked data file. It must not resolve to the input file.')
     return parser
 
 
@@ -219,6 +326,9 @@ def main():
         sys.exit(1)
     if not args.output_file.lower().endswith('.json'):
         logging.error("Output file must be a JSON file.")
+        sys.exit(1)
+    if Path(args.input_file).resolve() == Path(args.output_file).resolve():
+        logging.error("Error: Output file cannot be the same file as the input file.")
         sys.exit(1)
 
     masker = ConditionalMasker(args.config_file, args.input_file, args.output_file)
