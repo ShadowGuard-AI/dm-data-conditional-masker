@@ -179,6 +179,12 @@ class ConditionalMasker:
         masked_data = []
         for record in data:
             masked_record = record.copy()  # Create a copy to avoid modifying the original
+            # Rules are tested against masked_record, which earlier
+            # rules in this same loop have already rewritten. A rule
+            # written against an original value stops matching once an
+            # earlier rule masks that field, and a rule can match a
+            # masked value the original record never held. Rule order
+            # in the config is therefore part of the meaning.
             for rule in self.config:
                 try:
                     # Conditions are read by the narrow evaluator in
@@ -207,6 +213,11 @@ class ConditionalMasker:
 
 
     def apply_masking(self, masking_type):
+        # The original value is never passed in, so the replacement
+        # follows the masking type only: a date field gets a Faker date
+        # string in Faker's format whatever the original format was,
+        # and every masked value comes back as a string, even when the
+        # field it replaces held a number.
         """
         Applies the specified masking technique.
 
