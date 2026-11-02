@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-label="The church interior in three bands: window light creeping across the fixed wall and floor in the far band, the door ring turning a short way and settling while beads slide along their wires in the middle band, and an astrolabe carried level past the frame edge by a keeper hand in the near band">
+<rect width="900" height="300" fill="#a8aca8"/>
+<rect x="0" y="0" width="900" height="34" fill="#262019"/>
+<g><polygon points="690,18 736,18 742,104 684,104" fill="#fad682"/>
+<animateTransform attributeName="transform" type="translate" values="0 0; -26 0; 0 0" dur="18s" repeatCount="indefinite"/>
+<polygon points="684,104 742,104 610,238 500,238" fill="#e8b25c" opacity="0.28"/></g>
+<rect x="0" y="238" width="900" height="62" fill="#8a8c84"/>
+<g stroke="#6e7068" stroke-width="2"><line x1="60" y1="238" x2="30" y2="300"/><line x1="320" y1="238" x2="290" y2="300"/><line x1="580" y1="238" x2="550" y2="300"/><line x1="840" y1="238" x2="810" y2="300"/></g>
+<g>
+<rect x="96" y="96" width="330" height="204" fill="#56402a"/>
+<g fill="#402c18"><rect x="116" y="96" width="52" height="204"/><rect x="188" y="96" width="52" height="204"/><rect x="260" y="96" width="52" height="204"/><rect x="332" y="96" width="52" height="204"/></g>
+<rect x="96" y="150" width="330" height="10" fill="#1e140a"/><rect x="96" y="238" width="330" height="10" fill="#1e140a"/>
+<circle cx="261" cy="196" r="52" fill="#948c7c"/><circle cx="261" cy="196" r="52" fill="none" stroke="#1e3654" stroke-width="4"/>
+<rect x="250" y="138" width="22" height="26" fill="#141210"/>
+<g>
+<animateTransform attributeName="transform" type="rotate" values="0 261 150; 4 261 150; 2.4 261 150; 2.4 261 150; 2.4 261 150" dur="14s" repeatCount="indefinite"/>
+<circle cx="261" cy="202" r="42" fill="none" stroke="#101216" stroke-width="13"/>
+<path d="M228 232 A42 42 0 0 0 294 232" fill="none" stroke="#d6e4f2" stroke-width="3"/>
+</g>
+<circle cx="261" cy="246" r="5" fill="#101010"/>
+</g>
+<g>
+<rect x="520" y="120" width="220" height="52" fill="none" stroke="#1e3654" stroke-width="4"/>
+<g stroke="#1e3654" stroke-width="2"><line x1="528" y1="136" x2="732" y2="136"/><line x1="528" y1="156" x2="732" y2="156"/></g>
+<g fill="#3e6696">
+<circle cx="536" cy="136" r="7"><animate attributeName="cx" values="536; 584" dur="5s" begin="0s" fill="freeze"/></circle>
+<circle cx="536" cy="136" r="7"><animate attributeName="cx" values="536; 606" dur="5s" begin="1.2s" fill="freeze"/></circle>
+<circle cx="536" cy="136" r="7"><animate attributeName="cx" values="536; 628" dur="5s" begin="2.4s" fill="freeze"/></circle>
+<circle cx="536" cy="156" r="7"><animate attributeName="cx" values="536; 566" dur="5s" begin="0.6s" fill="freeze"/></circle>
+<circle cx="536" cy="156" r="7"><animate attributeName="cx" values="536; 592" dur="5s" begin="1.8s" fill="freeze"/></circle>
+<circle cx="536" cy="156" r="7"><animate attributeName="cx" values="536; 618" dur="5s" begin="3s" fill="freeze"/></circle>
+</g></g>
+<rect x="470" y="196" width="330" height="14" fill="#56402a"/>
+<rect x="486" y="210" width="16" height="30" fill="#402c18"/><rect x="758" y="210" width="16" height="30" fill="#402c18"/>
+<g>
+<animateTransform attributeName="transform" type="translate" values="-140 0; 140 0; 140 0; -140 0" keyTimes="0; 0.32; 0.78; 1" dur="22s" repeatCount="indefinite"/>
+<circle cx="830" cy="272" r="17" fill="none" stroke="#8a6d2f" stroke-width="4"/>
+<circle cx="830" cy="272" r="3" fill="#8a6d2f"/>
+<line x1="830" y1="255" x2="830" y2="289" stroke="#8a6d2f" stroke-width="2"/>
+<line x1="813" y1="272" x2="847" y2="272" stroke="#8a6d2f" stroke-width="2"/>
+<path d="M852 262 h48 v20 h-48 z" fill="#c9a06a"/>
+</g>
+</svg>

@@ -1,165 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dm Data Conditional Masker: what it is, how it runs, where it stops</title>
-<meta name="description" content="Dm Data Conditional Masker is one of my projects. The README in the repo is short, so this page sticks to what the files themselves show.">
-<style>
-:root {
-  --bg: #080c0a; --panel: #0d1410; --ink: #d9e8dd;
-  --mut: #111b15;
-  --acc: #57e389; --acc2: #e8b339;
-  --line: #0d1410;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink);
-  font-family: 'Palatino Linotype', Palatino, serif; line-height: 1.55; }
-code, pre, .mono { font-family: 'Menlo', monospace; }
-a { color: var(--acc2); }
-.hero { padding: 3rem 6vw 1rem; }
-.hero img.banner { width: 100%; height: auto; border: 1px solid var(--line);
-  border-radius: 10px; }
-.logo { width: 92px; height: 92px; border-radius: 18px;
-  border: 1px solid var(--line); }
-h1 { font-size: 2.4rem; margin: 0.4em 0 0.1em; }
-h2 { border-bottom: 2px solid var(--acc); padding-bottom: 0.2em;
-  margin-top: 2em; }
-.lede { font-size: 1.15rem; max-width: 62ch; }
-main { padding: 0 6vw 3rem; max-width: 1180px; margin: 0 auto; }
-.grid { display: grid; gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
-.card { background: var(--panel); border: 1px solid var(--line);
-  border-radius: 12px; padding: 1rem 1.2rem; }
-.card.pop { animation: rise 0.7s ease both; }
-@keyframes rise { from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; } }
-pre.code { background: #101014; color: #e8e6df; padding: 1rem 1.2rem;
-  border-radius: 12px; overflow-x: auto; font-size: 0.86rem;
-  border-left: 5px solid var(--acc); }
-table { border-collapse: collapse; width: 100%; }
-td, th { border-bottom: 1px solid var(--line); padding: 0.45rem 0.6rem;
-  text-align: left; }
-.shots { display: grid; gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.shots img { width: 100%; height: auto; border: 1px solid var(--line);
-  border-radius: 10px; background: #f4f1e8; }
-footer { padding: 2rem 6vw; border-top: 1px solid var(--line);
-  color: var(--mut); }
-.rail { display: flex; gap: 1.2rem; align-items: flex-start; }
-.rail nav { position: sticky; top: 1rem; min-width: 180px; }
-@media (max-width: 760px) { .rail { flex-direction: column; }
-  .rail nav { position: static; } }
-@media (prefers-reduced-motion: reduce) {
-  .card.pop { animation: none; } * { scroll-behavior: auto; } }
-</style>
-</head>
-<body class="layout-rail">
-<!-- This page exists for dm-data-conditional-masker alone: the layout (sidebar-rail),
-     the colors, and the type were picked for this project, not
-     shared with the other project pages. The code block below is
-     copied from the file it names, line for line. If it looks
-     plain, that is because the project is plain, and I would
-     rather the page match the project than dress it up. The one
-     thing I will not do here is oversell: what this project does
-     not do is stated on the page, not hidden from it. -->
-<header class="hero">
-  <img class="logo" src="assets/logo.png" alt="Dm Data Conditional Masker logo">
-  <img class="banner" src="assets/banner.png" alt="">
-  <h1>Dm Data Conditional Masker</h1>
-  <p class="mono"><a href="https://github.com/ShadowGuard-AI/dm-data-conditional-masker">github.com/ShadowGuard-AI/dm-data-conditional-masker</a></p>
-</header>
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><title>dm-data-conditional-masker: The Greenland Norse Last Wedding</title>
+<style>@font-face{font-family:Disp;src:url("fonts/Buenard.ttf")}@font-face{font-family:Text;src:url("fonts/Bitter.ttf")}
+body{background:#f7f3e8;font-family:Text,serif;color:#191919;margin:0}main{max-width:920px;margin:0 auto;padding:28px 28px 28px 52px;border-left:10px solid #345c42;position:relative}
+h1,h2,h3{font-family:Disp,serif;color:#1e4468}section{background:rgba(62,102,150,.08);padding:18px 22px;margin:16px 0;border-top:2px solid #345c42}
+img{max-width:100%}button{background:#948c7c;color:#f7f3e8;border:3px solid #1e3654;border-radius:50%;width:150px;height:150px;padding:14px;font-family:Disp,serif}
+button:focus{outline:3px double #3e6696}.refusal{color:#b22c1e;font-weight:bold}.label{display:inline-block;border:1px solid #345c42;padding:2px 8px;font-size:13px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}table{border-collapse:collapse}td,th{border-top:2px solid #345c42;padding:6px 10px;text-align:left}
+pre{white-space:pre-wrap;font-family:Text,serif;background:#efe9d8;padding:14px}code{font-family:Text,serif}</style></head><body><main>
+<img src="intro-banner.png" alt="Introduction banner: a dark timber church door with a heavy iron ring at rest, amber light on stone, no name anywhere">
+<h1>dm-data-conditional-masker: The Greenland Norse Last Wedding</h1>
+<p>dm-data-conditional-masker: The Greenland Norse Last Wedding names itself in that form throughout this page. The page is laid out as a parish register, one entry per section, ruled and sequential. Cinnabar appears only on refusal markers. Pine appears on the register spine strip at the left and on the table rules.</p>
+<img src="logo.png" alt="Logo: the heavy iron door ring on its round backplate, one nail head painted cinnabar"><img src="banner.png" alt="Wordmark banner: the church from its yard, the name painted in porcelain white on the dark door below the ring">
+<img src="scene.svg" alt="Animated scene in three bands">
+<div><button type="button">Mask Where the Rules Say So</button></div>
+<p><span class="label">Configuration File</span></p>
+<h3>A Closed Grammar</h3><h3>Data, Never Code</h3><h3>Output Never Equals Input</h3><h3>One Failed Rule, No Output</h3>
+<section><h2>Plate one: the job</h2><p>Data is masked only where conditions in a configuration file say so. Masking is selective: rules decide which records get masked. The README illustration, retold in words, is masking email addresses only for users in one department grouping. No address, no department name from any real organisation, and no record value appears on this page. Field illustrations are bare names and grammar forms only.</p></section>
+<section><h2>Plate two: the safety plate</h2><p>Conditions run through a narrow expression evaluator and never through Python eval. A configuration file is data, not code. That sentence stands as written because the README stands on it: nothing written in a configuration file can turn into code at runtime.</p></section>
+<section><h2>Plate three: the grammar, a closed list</h2><div class="cols"><div><h3>Allowed</h3><ul><li>Field lookups: a bare field name, or a record lookup with a constant field name.</li><li>Comparisons: <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>in</code>, and <code>not in</code>, including chained comparisons.</li><li>Membership against a list or tuple of constants, as the right side of <code>in</code> or <code>not in</code>.</li><li>Boolean forms: <code>and</code>, <code>or</code>, and unary <code>not</code>.</li><li>Constants: strings, numbers, booleans, and null, including a negative number written with a leading minus.</li></ul></div><div><h3>Refused</h3><ul><li>Calls</li><li>Imports</li><li>Attribute access</li><li>Subscripts on anything other than the record</li><li>Arithmetic</li><li>Comprehensions</li><li>Unknown field names</li></ul><p>Anything outside the allowed list is refused with an error. No invented operator is added to either column.</p></div></div></section>
+<section><h2>Plate four: the paths a caller hands over</h2><table><tr><th>Control</th><th>What it is</th></tr><tr><td><code>-h</code></td><td>Show help message and exit</td></tr><tr><td><code>-c</code></td><td>Path to the configuration file.</td></tr><tr><td><code>-i</code></td><td>Path to the input data file.</td></tr><tr><td><code>-o</code></td><td>Path to the output masked data file. <span class="refusal">It must not be the input file: if the output path resolves to the input file, the run refuses and exits 1 before any write.</span></td></tr></table><p>Every path on this plate is a placeholder. The working form is <code>./dm-data-conditional-masker [params]</code>, an executable form followed by a bracketed params placeholder.</p></section>
+<section><h2>Install, corrected</h2><p><code>git clone https://github.com/ShadowGuard-AI/dm-data-conditional-masker</code></p><p>The clone line above is labelled openly as a correction: it reads with the hyphenated organisation. What the live README actually prints names a different organisation altogether; that printed version is preserved in the record block below and in the re-skin. There is no installer, no package step, and no second command.</p></section>
+<section><h2>Licence</h2><p>Granting sits in the repository LICENSE file, under MIT License terms. Its holder line is recorded here by shape alone: a pen name in full first, then a given name in parentheses reduced to one initial, then an account handle. The line itself is not reproduced, and the initial is not expanded. The README licence chapter grants nothing and states no terms; it is one line long, Copyright (c) ShadowStrikeHQ, naming an organisation rather than a person. A marginal note in the keeper hand marks that organisation naming as faulty; the entry itself is not struck through and not rewritten.</p></section>
+<section><h2>Plate five, read last: the failure terms</h2><p class="refusal">If one rule fails to evaluate for one record, the failures are counted, the run exits 1, and no output is written at all.</p><p>The unknown field illustration belongs here in full: spell a field name wrong in a condition, naming a misspelled or unknown field, and the run fails in exactly that counted way. The record in question never drifts through unmasked behind a cheery success message, and its data is never passed through unmasked under a success message.</p></section>
+<section><h2>The preserved README record</h2><pre>![Banner](banner.png)
 
-<main>
-  <section class="rail">
-    <nav aria-label="on this page">
-      <p class="mono"><a href="#run">Run it</a><br>
-      <a href="#files">The files</a><br>
-      <a href="#sheets">The sheets</a><br>
-      <a href="https://github.com/ShadowGuard-AI/dm-data-conditional-masker">The repo</a></p>
-    </nav>
-    <div>
-      <p class="lede">Dm Data Conditional Masker is one of my projects. The README in the repo is short, so this page sticks to what the files themselves show.</p>
-      <div class="grid">
-        <div class="card pop"><h3>What it is</h3>
-          <p>Dm Data Conditional Masker: 5 files, 365 counted
-          lines across Python 345, Markdown 19, Text 1. One job, done in the
-          open, in files you can read.</p></div>
-        <div class="card pop"><h3>The biggest piece</h3>
-          <p><code>main.py</code> carries the most
-          lines. If the project grows, that file is where the growth
-          lands first, for better or worse.</p></div>
-        <div class="card pop"><h3>The honest gap</h3>
-          <p>No test files yet. That is the honest gap, and the roadmap in the visuals folder says what the first one should cover.</p></div>
-      </div>
-      <section id="run">
-        <h2>Run it</h2>
-        <p>The repo README has the exact commands for this one. The
-        shape is the shape for most of my projects: clone it, read the
-        top file first so you know what will happen, then run it on
-        something you do not mind breaking.</p>
-        <p class="mono">$ git clone https://github.com/ShadowGuard-AI/dm-data-conditional-masker.git<br>$ cd dm-data-conditional-masker</p>
-      </section>
-      
-  <section aria-label="real code">
-    <h2>The code, as it sits in the repo</h2>
-    <p>From <code>main.py</code>, line 8 on. I did
-    not tidy it for the page. What you see is what the file has.</p>
-    <pre class="code"><code>logging.basicConfig(level=logging.INFO, format=&#x27;%(asctime)s - %(levelname)s - %(message)s&#x27;)
+# dm-data-conditional-masker
+Masks data based on conditions specified in a configuration file. Allows selective masking of data based on rules defined using the condition grammar described below (e.g., mask email addresses only for users in a specific department). Conditions are read by a narrow expression evaluator, never by Python eval, so a configuration file is data, not code. - Focused on Tools designed to generate or mask sensitive data with realistic-looking but meaningless values
 
-class ConditionalMasker:
-    &quot;&quot;&quot;
-    Masks data based on conditions specified in a configuration file.
-    &quot;&quot;&quot;
+## Condition grammar
+A condition may use only:
+- Field lookups: a bare field name such as `age`, or `record['department']` with a constant field name.
+- Comparisons: `==`, `!=`, `&lt;`, `&lt;=`, `&gt;`, `&gt;=`, `in`, and `not in`, including chained comparisons such as `18 &lt;= age &lt; 70`. The right side of `in` or `not in` may be a list or tuple of constants.
+- Boolean operators: `and`, `or`, and unary `not`.
+- Constants: strings, numbers, booleans, and null, including a negative number written with a leading minus.
 
-    def __init__(self, config_file, input_file, output_file):
-        &quot;&quot;&quot;
-        Initializes the ConditionalMasker.
+Anything else is rejected with an error: calls, imports, attribute access, subscripts on anything other than `record`, arithmetic, comprehensions, and unknown field names.
 
-        Args:
-            config_file (str): Path to the configuration file.
-            input_file (str): Path to the input data file.
-            output_file (str): Path to the output masked data file.
-        &quot;&quot;&quot;
-        self.config_file = config_file
-        self.input_file = input_file
-        self.output_file = output_file
-        self.config = self.load_config()
-        self.fake = Faker()</code></pre>
-  </section>
-      <section id="files">
-        <h2>The files that matter</h2>
-        <table><tr><th>File</th><th>Lines</th></tr>
-        <tr><td><code>main.py</code></td><td>345</td></tr>
-        <tr><td><code>README.md</code></td><td>19</td></tr>
-        <tr><td><code>requirements.txt</code></td><td>1</td></tr>
-        <tr><td><code>banner.png</code></td><td>0</td></tr>
-        <tr><td><code>logo.png</code></td><td>0</td></tr>
-        </table>
-        <p>Names doing the work: <span class="mono">ConditionalMasker, setup_argparse, main, __init__, load_config, mask_data, apply_masking, process_data</span>.</p>
-      </section>
-      <section id="sheets">
-        <h2>Drawn by hand</h2>
-        <p>I sketch my projects on notebook paper so I have to
-        understand them well enough to draw them. The full set,
-        with the counts and how they were counted, is the
-        <a href="https://github.com/ShadowGuard-AI/dm-data-conditional-masker/tree/main/dm-data-conditional-masker-Visuals">dm-data-conditional-masker-Visuals</a>
-        folder in the repo. Nothing is drawn over the binder holes.
-        That is a rule, not a style.</p>
-        <div class="shots">
-          <img src="assets/architecture.png" alt="Hand drawn architecture sheet for Dm Data Conditional Masker">
-          <img src="assets/flowchart.png" alt="Hand drawn flowchart sheet for Dm Data Conditional Masker">
-          <img src="assets/product-map.png" alt="Hand drawn product map sheet for Dm Data Conditional Masker">
-        </div>
-      </section>
-    </div>
-  </section>
-</main>
-<footer>
-  <p>Dm Data Conditional Masker is one of my projects. This page was written
-  from the repo itself on 2026-10-30: the counts are the
-  repo's counts, the code is the repo's code, and the gaps are the
-  repo's gaps.</p>
-</footer>
-</body>
-</html>
+## Install
+`git clone https://github.com/ShadowStrikeHQ/dm-data-conditional-masker`
+
+## Usage
+`./dm-data-conditional-masker [params]`
+
+## Parameters
+- `-h`: Show help message and exit
+- `-c`: Path to the configuration file.
+- `-i`: Path to the input data file.
+- `-o`: Path to the output masked data file. It must not be the input file: if the output path resolves to the input file, the run refuses and exits 1 before any write.
+
+## Failure rules
+- If any rule fails to evaluate for any record, the failures are counted, the run exits 1, and no output is written. A condition naming a misspelled or unknown field fails in this way, so its data is never passed through unmasked under a success message.
+
+## License
+Copyright (c) ShadowStrikeHQ</pre></section>
+</main></body></html>
