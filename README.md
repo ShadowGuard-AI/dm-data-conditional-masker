@@ -33,12 +33,12 @@ Anything else is rejected with an error: calls, imports, attribute access, subsc
 ![Minor separator](sep-light.svg)
 
 ## Install
-`git clone https://github.com/ShadowStrikeHQ/dm-data-conditional-masker`
+`git clone https://github.com/ShadowGuard-AI/dm-data-conditional-masker`
 
 ![Minor separator](sep-light.svg)
 
 ## Usage
-`./dm-data-conditional-masker [params]`
+`python3 main.py [options]`
 
 ![Minor separator](sep-light.svg)
 
@@ -60,7 +60,7 @@ Anything else is rejected with an error: calls, imports, attribute access, subsc
 ![Minor separator](sep-light.svg)
 
 ## License
-Copyright (c) ShadowStrikeHQ
+This project is released under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ![Major separator](sep-heavy.svg)
 
